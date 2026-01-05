@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Profile</title>
+</head>
+<body>
+
+<h1>Student Profile</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Age:</label><br>
+    <input type="number" name="age" required><br><br>
+
+    <label>Course:</label><br>
+    <input type="text" name="course" required><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+
+<hr>
+
+{% if student %}
+    <h2>Profile Details</h2>
+    <p><b>Name:</b> {{ student.name }}</p>
+    <p><b>Age:</b> {{ student.age }}</p>
+    <p><b>Course:</b> {{ student.course }}</p>
+{% endif %}
+
+</body>
+</html>
