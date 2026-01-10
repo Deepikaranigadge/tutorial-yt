@@ -1,42 +1,14 @@
-from flask import Flask, render_template, request, redirect
-import sqlite3
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# Create database and table
-def init_db():
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT,
-            password TEXT
-        )
-    """)
-    conn.commit()
-    conn.close()
-
-init_db()
-
 @app.route("/", methods=["GET", "POST"])
-def register():
+def hello():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        name = request.form["name"]
+        return f"<h2>Hello, {name}!</h2>"
 
-        conn = sqlite3.connect("users.db")
-        cursor = conn.cursor()
-        cursor.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?)",
-            (username, password)
-        )
-        conn.commit()
-        conn.close()
-
-        return "User Registered Successfully"
-
-    return render_template("register.html")
+    return render_template("hello.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
